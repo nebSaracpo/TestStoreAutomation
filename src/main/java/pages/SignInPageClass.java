@@ -1,12 +1,12 @@
 package pages;
 
-import drivers.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import wait.WaitHandler;
 
 public class SignInPageClass {
 
@@ -25,21 +25,31 @@ public class SignInPageClass {
     @FindBy (css = ".alert.alert-danger")
     WebElement authenticationFailedError;
 
+    @FindBy (className = "input-group-btn")
+    WebElement ShowOrHidePasswordButton;
+
     public SignInPageClass (WebDriver driver) {
         this.driver=driver;
-        wait = DriverFactory.createWait(driver);
+        wait = WaitHandler.createWait(driver);
         PageFactory.initElements(driver, this);
     }
 
     public void tryToSignIn (String email, String password) {
-        wait.until(ExpectedConditions.elementToBeClickable(emailInputField)).clear();
+        WaitHandler.waitUntilElementIsClickable(wait, emailInputField);
+        emailInputField.clear();
         emailInputField.sendKeys(email);
-        wait.until(ExpectedConditions.elementToBeClickable(passwordInputField)).clear();
+        WaitHandler.waitUntilElementIsClickable(wait, passwordInputField);
+        passwordInputField.clear();
         passwordInputField.sendKeys(password);
-        wait.until(ExpectedConditions.elementToBeClickable(signInButton)).click();
+        WaitHandler.waitUntilElementIsClickable(wait, signInButton);
+        signInButton.click();
     }
 
     public String getErrorMessage_InvalidLogin () {
         return wait.until(ExpectedConditions.visibilityOf(authenticationFailedError)).getText();
     }
+
+//    public void clickOnShowOrHidePasswordButton () {
+//
+//    }
 }
