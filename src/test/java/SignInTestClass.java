@@ -22,4 +22,10 @@ public class SignInTestClass extends BaseTest {
         Assert.assertTrue(headerBar.isAccountFirstAndLastNameButtonDisplayed());
 
     }
+
+    @Test
+    public void verifyInvalidSignIn() {
+        signInPage.tryToSignIn("asdasdasdas@adsa.asd", "asdasdasdasd");
+        Assert.assertEquals(signInPage.getErrorMessage_InvalidLogin(), "Authentication failed.");
+    }
 }
