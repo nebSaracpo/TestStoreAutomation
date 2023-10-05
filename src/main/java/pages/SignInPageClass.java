@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import wait.WaitHandler;
 
@@ -16,7 +15,7 @@ public class SignInPageClass {
     @FindBy (xpath = "//input[@class='form-control']")
     WebElement emailInputField;
 
-    @FindBy (css = "[type='password']")
+    @FindBy (css = ".js-visible-password")
     WebElement passwordInputField;
 
     @FindBy (id = "submit-login")
@@ -26,7 +25,7 @@ public class SignInPageClass {
     WebElement authenticationFailedError;
 
     @FindBy (className = "input-group-btn")
-    WebElement ShowOrHidePasswordButton;
+    WebElement showOrHidePasswordButton;
 
     public SignInPageClass (WebDriver driver) {
         this.driver=driver;
@@ -40,16 +39,30 @@ public class SignInPageClass {
         emailInputField.sendKeys(email);
         WaitHandler.waitUntilElementIsClickable(wait, passwordInputField);
         passwordInputField.clear();
-        passwordInputField.sendKeys(password);
+        typeTextIntoPasswordInputField(password);
         WaitHandler.waitUntilElementIsClickable(wait, signInButton);
         signInButton.click();
     }
 
     public String getErrorMessage_InvalidLogin () {
-        return wait.until(ExpectedConditions.visibilityOf(authenticationFailedError)).getText();
+        WaitHandler.waitUntilElementIsVisible(wait, authenticationFailedError);
+        return authenticationFailedError.getText();
     }
 
-//    public void clickOnShowOrHidePasswordButton () {
-//
-//    }
+    public void clickOnShowOrHidePasswordButton () {
+        WaitHandler.waitUntilElementIsClickable(wait, showOrHidePasswordButton);
+        showOrHidePasswordButton.click();
+    }
+
+    public void typeTextIntoPasswordInputField (String password) {
+        passwordInputField.sendKeys(password);
+    }
+
+    public String getTypeAttributeOfPasswordInputField () {
+        return passwordInputField.getAttribute("type");
+    }
+
+    public String getTextOfHideOrShowPasswordButton () {
+        return showOrHidePasswordButton.getText();
+    }
 }
