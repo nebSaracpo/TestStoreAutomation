@@ -8,8 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-
 public class SignInPageClass {
 
     WebDriver driver;
@@ -18,11 +16,14 @@ public class SignInPageClass {
     @FindBy (xpath = "//input[@class='form-control']")
     WebElement emailInputField;
 
-    @FindBy (css = "[type=\'password\']")
+    @FindBy (css = "[type='password']")
     WebElement passwordInputField;
 
     @FindBy (id = "submit-login")
     WebElement signInButton;
+
+    @FindBy (css = ".alert.alert-danger")
+    WebElement authenticationFailedError;
 
     public SignInPageClass (WebDriver driver) {
         this.driver=driver;
@@ -36,5 +37,9 @@ public class SignInPageClass {
         wait.until(ExpectedConditions.elementToBeClickable(passwordInputField)).clear();
         passwordInputField.sendKeys(password);
         wait.until(ExpectedConditions.elementToBeClickable(signInButton)).click();
+    }
+
+    public String getErrorMessage_InvalidLogin () {
+        return wait.until(ExpectedConditions.visibilityOf(authenticationFailedError)).getText();
     }
 }
