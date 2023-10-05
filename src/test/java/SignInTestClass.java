@@ -28,4 +28,17 @@ public class SignInTestClass extends BaseTest {
         signInPage.tryToSignIn("asdasdasdas@adsa.asd", "asdasdasdasd");
         Assert.assertEquals(signInPage.getErrorMessage_InvalidLogin(), "Authentication failed.");
     }
+
+    @Test
+    public void verifyShowAndHidePassword () {
+        Assert.assertEquals(signInPage.getTextOfHideOrShowPasswordButton().toLowerCase(), "show");
+        signInPage.typeTextIntoPasswordInputField("qwertyu123");
+        Assert.assertEquals(signInPage.getTypeAttributeOfPasswordInputField().toLowerCase(), "password");
+        signInPage.clickOnShowOrHidePasswordButton();
+        Assert.assertEquals(signInPage.getTypeAttributeOfPasswordInputField().toLowerCase(), "text");
+        Assert.assertEquals(signInPage.getTextOfHideOrShowPasswordButton().toLowerCase(), "hide");
+        signInPage.clickOnShowOrHidePasswordButton();
+        Assert.assertEquals(signInPage.getTypeAttributeOfPasswordInputField().toLowerCase(), "password");
+        Assert.assertEquals(signInPage.getTextOfHideOrShowPasswordButton().toLowerCase(), "show");
+    }
 }
