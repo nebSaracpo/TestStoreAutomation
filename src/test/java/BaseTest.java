@@ -1,3 +1,4 @@
+import drivers.DriverFactory;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,7 +15,7 @@ public class BaseTest {
 
     @BeforeTest
     public void initialSetup() {
-        driver = new ChromeDriver();
+        driver = DriverFactory.createDriver();
         driver.manage().window().setSize(new Dimension(1900, 1000));
         headerBar = new HeaderPageClass(driver);
         signInPage = new SignInPageClass(driver);

@@ -1,5 +1,6 @@
 package pages;
 
+import drivers.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,7 +23,7 @@ public class HeaderPageClass {
 
     public HeaderPageClass(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait = DriverFactory.createWait(driver);
         PageFactory.initElements(driver, this);
     }
 
