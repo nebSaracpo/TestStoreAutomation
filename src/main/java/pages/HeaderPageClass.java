@@ -1,14 +1,11 @@
 package pages;
 
-import drivers.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
+import wait.WaitHandler;
 
 public class HeaderPageClass {
 
@@ -23,12 +20,13 @@ public class HeaderPageClass {
 
     public HeaderPageClass(WebDriver driver) {
         this.driver = driver;
-        wait = DriverFactory.createWait(driver);
+        wait = WaitHandler.createWait(driver);
         PageFactory.initElements(driver, this);
     }
 
     public void clickOnSignInButton () {
-        wait.until(ExpectedConditions.visibilityOf(signInButton)).click();
+        WaitHandler.waitUntilElementIsVisible(wait, signInButton);
+        signInButton.click();
     }
 
     public boolean isAccountFirstAndLastNameButtonDisplayed () {
