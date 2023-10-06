@@ -14,7 +14,7 @@ public abstract class BasePage {
     protected WebDriver driver;
     WebDriverWait wait;
 
-    //adding comment just for commit
+    //added comment
 
 
     protected BasePage (WebDriver driver) {
