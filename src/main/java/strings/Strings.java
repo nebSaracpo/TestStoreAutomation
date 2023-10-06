@@ -7,4 +7,6 @@ public class Strings {
     public static final String VALID_SIGNIN_PASSWORD = "TestUser123!";
     public static final String INVALID_SIGNIN_EMAIL = "asdadsadada@dsafd.dsf";
     public static final String INVALID_SIGNIN_PASSWORD = "sadasdasdadasda";
+
+    public static final int WAIT_TIME = 15;
 }

@@ -1,18 +1,31 @@
+import drivers.DriverFactory;
+import org.openqa.selenium.Dimension;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import pages.HeaderPageClass;
+import pages.SignInPageClass;
 import strings.Strings;
 
 public class SignInTestClass extends BaseTest {
 
+    HeaderPageClass headerBar;
+    SignInPageClass signInPage;
+
     @BeforeMethod
-    public void navigateTo () {
+    public void initialSetup () {
+        driver = DriverFactory.createDriver();
+        driver.manage().window().setSize(new Dimension(1900, 1000));
+        headerBar = new HeaderPageClass(driver);
+        signInPage = new SignInPageClass(driver);
         driver.get(Strings.HOMEPAGE_URL);
         headerBar.clickOnSignInButton();
     }
 
     @AfterMethod
-    public void deleteCookies () {
-        driver.manage().deleteAllCookies();
+    public void closeDriver () {
+        driver.quit();
     }
 
     @Test
