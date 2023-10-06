@@ -1,11 +1,12 @@
 import org.testng.Assert;
 import org.testng.annotations.*;
+import strings.Strings;
 
 public class SignInTestClass extends BaseTest {
 
     @BeforeMethod
     public void navigateTo () {
-        driver.get("http://teststore.automationtesting.co.uk/");
+        driver.get(Strings.HOMEPAGE_URL);
         headerBar.clickOnSignInButton();
     }
 
@@ -16,23 +17,21 @@ public class SignInTestClass extends BaseTest {
 
     @Test
     public void verifySuccessfulLogin () {
-        String email = "saracpo@gmail.com";
-        String password = "TestUser123!";
-        signInPage.tryToSignIn(email, password);
+        signInPage.tryToSignIn(Strings.VALID_SIGNIN_EMAIL, Strings.VALID_SIGNIN_PASSWORD);
         Assert.assertTrue(headerBar.isAccountFirstAndLastNameButtonDisplayed());
 
     }
 
     @Test
     public void verifyInvalidSignIn() {
-        signInPage.tryToSignIn("asdasdasdas@adsa.asd", "asdasdasdasd");
+        signInPage.tryToSignIn(Strings.INVALID_SIGNIN_EMAIL, Strings.INVALID_SIGNIN_PASSWORD);
         Assert.assertEquals(signInPage.getErrorMessage_InvalidLogin(), "Authentication failed.");
     }
 
     @Test
     public void verifyShowAndHidePassword () {
         Assert.assertEquals(signInPage.getTextOfHideOrShowPasswordButton().toLowerCase(), "show");
-        signInPage.typeTextIntoPasswordInputField("qwertyu123");
+        signInPage.typeTextIntoPasswordInputField(Strings.INVALID_SIGNIN_PASSWORD);
         Assert.assertEquals(signInPage.getTypeAttributeOfPasswordInputField().toLowerCase(), "password");
         signInPage.clickOnShowOrHidePasswordButton();
         Assert.assertEquals(signInPage.getTypeAttributeOfPasswordInputField().toLowerCase(), "text");
