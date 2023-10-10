@@ -1,8 +1,11 @@
+package tests;
+
 import drivers.DriverFactory;
 import org.openqa.selenium.Dimension;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.HeaderPageClass;
 import pages.SignInPageClass;
@@ -14,8 +17,9 @@ public class SignInTestClass extends BaseTest {
     SignInPageClass signInPage;
 
     @BeforeMethod
-    public void initialSetup () {
-        driver = DriverFactory.createDriver();
+    @Parameters("browser")
+    public void initialSetup (String browser) {
+        driver = DriverFactory.createDriver(browser);
         driver.manage().window().setSize(new Dimension(1900, 1000));
         headerBar = new HeaderPageClass(driver);
         signInPage = new SignInPageClass(driver);
